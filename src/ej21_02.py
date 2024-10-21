@@ -8,7 +8,6 @@ def pedir_clave():
     return clave_usuario
 
 def comprobar_contrasenia():
-
     clave = "contraseña"
     clave_usuario = pedir_clave()
     salir = False
@@ -22,7 +21,6 @@ def comprobar_contrasenia():
     return True
 
 def main():
-
     if comprobar_contrasenia():
         print("La contraseña es correcta.")
 

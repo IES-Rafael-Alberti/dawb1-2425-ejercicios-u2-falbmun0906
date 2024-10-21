@@ -34,6 +34,5 @@ def main():
     else:
         print("El número {} es impar.".format((numero)))
 
-
 if __name__ == "__main__":
     main()
