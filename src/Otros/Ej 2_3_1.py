@@ -10,7 +10,6 @@
 # Extra 4: Usar también otra función validar_edad(edad: int)
 
 def validar_edad(edad: int):
-
     if edad < 0:
         raise ValueError("La edad no puede ser negativa.")
     if edad == 0:
@@ -35,7 +34,6 @@ def pedir_edad():
     return edad
 
 def mostrar_anios_cumplidos(edad: int):
-
     serie = ""
 
     for i in range(1, edad + 1):
