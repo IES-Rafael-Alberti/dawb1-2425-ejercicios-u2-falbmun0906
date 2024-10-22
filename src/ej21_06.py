@@ -37,7 +37,6 @@ def introducir_sexo() -> bool:
     return sexo
 
 def letra_nombre(nombre: str, abc) -> bool:
-
     for letra in abc[0:14]:
         if nombre.startswith(letra):
             return True
@@ -45,6 +44,7 @@ def letra_nombre(nombre: str, abc) -> bool:
     return False
 
 def crear_abc() -> list:
+    # Explicación de Diiego (mucho más fácil)
     # abecedario = string.ascii_lowercase
     # pos_n = abecedario.find("n")
     # abecedario = abecedario[:pos_n + 1] + "ñ" + abecedario[pos_n + 1:]
