@@ -24,11 +24,21 @@ def dame_edad():
     
     return edad
 
+def calcular_precio(edad):
+    if edad < 4:
+        precio = 0
+    elif 4 <= edad < 18:
+        precio = 5
+    else:
+        precio = 10
+    
+    return precio
+
 def main():
     edad = dame_edad()
+    precio = calcular_precio(edad)
+    
+    print(f"El precio de la entrada es de {precio}€")
 
-    print(edad)
-
-    pass
 if __name__ == "__main__":
     main()
