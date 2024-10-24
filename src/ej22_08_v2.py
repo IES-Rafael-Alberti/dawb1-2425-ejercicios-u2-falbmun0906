@@ -7,6 +7,8 @@
 # 7 5 3 1
 # 9 7 5 3 1
 
+# Versión 2
+
 def pedir_entero() -> int:
     valor = None
     while valor == None:
@@ -20,16 +22,28 @@ def pedir_entero() -> int:
     
     return valor
 
+def es_par(numero):
+    if numero % 2 == 0:
+        return True
+    else:
+        return False
+    
 def hacer_triangulo(numero):
     fila = ""
+    par = es_par(numero)
     triangulo = ""
 
-    for i in range(1, numero + 1):
-        if i % 2 != 0:
-            fila += str(i)[::-1] + " "
-            triangulo += fila[::-1] + "\n"
+    for i in range(0, numero + 1):
+        if not par:
+            if i % 2 != 0:
+                fila += str(i)[::-1] + " "
+                triangulo += fila[::-1] + "\n"
+        elif par:
+            if i % 2 == 0:
+                fila += str(i)[::-1] + " "
+                triangulo += fila[::-1] + "\n"
+    
     triangulo = triangulo[:-1]
-
     return triangulo
 
 def main():
