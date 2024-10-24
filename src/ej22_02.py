@@ -10,7 +10,7 @@ def comprobar_edad(edad):
     elif edad >= 125:
         raise ValueError("La edad no puede ser superior a 125.")
 
-def pedir_edad():
+def pedir_edad() -> int:
     edad = None
     while edad == None:
         try:
@@ -25,10 +25,27 @@ def pedir_edad():
     
     return edad
 
+def serie_edad(edad):
+    for i in range(1, edad + 1):
+        print(i)
+    
+    # En una línea separado por comas.
+    
+    # serie = ""
+    # for i in range(1, edad + 1):
+    #     if i < edad:
+    #         serie += str(i) + ", "
+    #     else:
+    #         serie += str(i) + "."
+
+    # return serie
+
 def main():
     edad = pedir_edad()
-
-    print(edad)
+    serie_edad(edad)
+    
+    # serie = serie_edad(edad)
+    # print(f"A lo largo de tu vida has cumplido: {serie}")
 
 if __name__ == "__main__":
     main()
