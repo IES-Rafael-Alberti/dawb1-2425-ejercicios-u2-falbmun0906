@@ -26,8 +26,11 @@ def pedir_edad() -> int:
     return edad
 
 def serie_edad(edad):
+    serie = ""
     for i in range(1, edad + 1):
-        print(i)
+        serie += str(i) + "\n"
+    
+    return serie[:-1]
     
     # En una línea separado por comas.
     
@@ -42,7 +45,7 @@ def serie_edad(edad):
 
 def main():
     edad = pedir_edad()
-    serie_edad(edad)
+    print(serie_edad(edad))
     
     # serie = serie_edad(edad)
     # print(f"A lo largo de tu vida has cumplido: {serie}")

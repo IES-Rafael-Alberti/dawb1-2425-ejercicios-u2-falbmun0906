@@ -7,7 +7,7 @@ def pedir_opcion():
     while opcion == None:
         opcion = input("-> ")
         if opcion != "1" and opcion != "2" and opcion != "3":
-            print("Introduzca una opción correcta (1, 2 ó 3).")
+            print("Introduzca una opción válida (1, 2 ó 3).")
             opcion = None
 
     return opcion
