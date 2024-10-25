@@ -5,20 +5,23 @@
 def tabla_multiplicar():
     n = 1
     i = 1
-
-    print(f"Tabla del {n}:")
+    tabla = f"Tabla del {n}: "
+   
     while n < 11:
-        print(i * n)
         if i == 10:
+            tabla += str(i * n) + "."
             n += 1
             i = 1
             if n < 11:
-                print(f"Tabla del {n}:")
+                tabla += f"\nTabla del {n}: "
         else:
+            tabla += str(i * n) + ", "
             i += 1
 
+    return tabla
+
 def main():
-    tabla_multiplicar()
+    print(tabla_multiplicar())
 
 if __name__ == "__main__":
     main()

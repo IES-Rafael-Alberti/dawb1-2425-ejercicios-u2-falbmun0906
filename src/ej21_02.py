@@ -14,15 +14,15 @@ def comprobar_contrasenia():
 
     while salir != True:
         if clave_usuario.lower() == clave:
-            salir = True
+            return True
         else:
-            print("Contraseña incorrecta.")
-            clave_usuario = pedir_clave()
-    return True
+           return False
 
 def main():
     if comprobar_contrasenia():
         print("La contraseña es correcta.")
-
+    else:
+        print("La contraseña es incorrecta.")
+        
 if __name__ == "__main__":
     main()
