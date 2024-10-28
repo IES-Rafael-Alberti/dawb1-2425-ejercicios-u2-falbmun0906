@@ -1,4 +1,4 @@
-# Ejercicio 2.2.4
+# Ejercicio 2.3.4
 
 # Escribir un programa que pida al usuario un número entero positivo y muestre por pantalla la cuenta atrás desde ese número hasta cero separados por comas.
 

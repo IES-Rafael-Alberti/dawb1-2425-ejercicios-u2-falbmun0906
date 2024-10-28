@@ -26,9 +26,9 @@ def hacer_triangulo(numero):
 
     for i in range(1, numero + 1):
         if i % 2 != 0:
-            fila += str(i)[::-1] + " "
+            fila += " " + str(i)[::-1]
             triangulo += fila[::-1] + "\n"
-    triangulo = triangulo[:-1]
+    triangulo = triangulo[:-2]
 
     return triangulo
 
