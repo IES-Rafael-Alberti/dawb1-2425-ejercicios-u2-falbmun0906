@@ -122,8 +122,12 @@ def ronda(n_ronda, cartas_j1, cartas_j2, puntuacion_j1, puntuacion_j2, ronda_fin
 # 		J2 - jugador2 - A44 (18)
 
     if ronda_final:
-        ronda = f"JUEGO TERMINADO - Ronda {n_ronda}\n{evaluar_resultado(puntuacion_j1, puntuacion_j2)}\nJ1 - jugador1 - {cartas_j1} ({puntuacion_j1})\nJ2 - jugador2 - {cartas_j2} ({puntuacion_j2})"
+        ronda = f"JUEGO TERMINADO - Ronda {n_ronda}\n{evaluar_resultado(puntuacion_j1, puntuacion_j2)}\nJ1 - jugador1 - {cartas_j1} ({puntuacion_j1})\nJ2 - jugador2 - {cartas_j2} ({puntuacion_j2})\n"
     else:
+        if puntuacion_j1 > 21:
+            puntuacion_j1 = "*se pasa*"
+        if puntuacion_j2 > 21:
+            puntuacion_j2 = "*se pasa*"
         ronda = f"RONDA {n_ronda}\nJ1 - jugador1 - {cartas_j1[:-1]} ({puntuacion_j1})\nJ2 - jugador2 - {cartas_j2[:-1]} ({puntuacion_j2})\n"
 
     return ronda
@@ -155,6 +159,7 @@ def blackjack():
     seguir_j1, seguir_j2 = True, True
     modo_de_juego = modo_juego() # 'True' para dos jugadores | 'False' para un solo jugador contra la máquina.
     riesgo_bot = random.randint(0, 6) # Define cuánto se va a arriesgar la máquina cada partida. Se plantará con valores entre el 15 y el 21 de forma aleatoria.
+    bot_se_planta = False
 
     # Mensaje de presentación del modo de juego elegido.
     clear()
@@ -184,12 +189,26 @@ def blackjack():
             n_ronda -= 1
         else:
             if seguir_j1:
-                seguir_j1 = pedir_seguir("Jugador 1")
+                if puntuacion_j1 < 21:
+                    seguir_j1 = pedir_seguir("Jugador 1")
+                else:
+                    seguir_j1 = False
             if modo_de_juego:
                 if seguir_j2:
                     seguir_j2 = pedir_seguir("Jugador 2")
             else:
-                seguir_j2 = (21 - puntuacion_j2) >= riesgo_bot
+                seguir_j2 = (21 - puntuacion_j2) > riesgo_bot
+                if not seguir_j2 and not bot_se_planta:
+                    time.sleep(2)
+                    clear()
+                    print("* BOT: Me planto >.< *")
+                    time.sleep(3)
+                    bot_se_planta = True
+                if seguir_j2:
+                    time.sleep(2)
+                    clear()
+                    print("* BOT: Cojo carta ;) *")
+                    time.sleep(2)
             n_ronda += 1
         clear()
     
