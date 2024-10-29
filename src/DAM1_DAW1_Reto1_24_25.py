@@ -122,7 +122,7 @@ def ronda(n_ronda, cartas_j1, cartas_j2, puntuacion_j1, puntuacion_j2, ronda_fin
 # 		J2 - jugador2 - A44 (18)
 
     if ronda_final:
-        ronda = f"JUEGO TERMINADO - Ronda {n_ronda}\n{evaluar_ronda(puntuacion_j1, puntuacion_j2)}\nJ1 - jugador1 - {cartas_j1} ({puntuacion_j1})\nJ2 - jugador2 - {cartas_j2} ({puntuacion_j2})"
+        ronda = f"JUEGO TERMINADO - Ronda {n_ronda}\n{evaluar_resultado(puntuacion_j1, puntuacion_j2)}\nJ1 - jugador1 - {cartas_j1} ({puntuacion_j1})\nJ2 - jugador2 - {cartas_j2} ({puntuacion_j2})"
     else:
         ronda = f"RONDA {n_ronda}\nJ1 - jugador1 - {cartas_j1[:-1]} ({puntuacion_j1})\nJ2 - jugador2 - {cartas_j2[:-1]} ({puntuacion_j2})\n"
 
@@ -144,6 +144,7 @@ def pedir_seguir(jugador: str) -> bool:
         return False
 
 def blackjack():
+    # Variables de inicio de la partida.
     baraja = crear_baraja()
     n_ronda = 1
     cartas_j1 = ""
@@ -153,15 +154,16 @@ def blackjack():
     salir = False
     seguir_j1, seguir_j2 = True, True
     modo_de_juego = modo_juego() # 'True' para dos jugadores | 'False' para un solo jugador contra la máquina.
-    bot_se_planta = random.randint(0, 6) # Define cuánto se va a arriesgar la máquina cada partida. Se conformará con valores entre el 15 y el 21 de forma aleatoria.
+    riesgo_bot = random.randint(0, 6) # Define cuánto se va a arriesgar la máquina cada partida. Se plantará con valores entre el 15 y el 21 de forma aleatoria.
 
+    # Mensaje de presentación del modo de juego elegido.
     clear()
     if modo_de_juego:
         print("Iniciando partida de dos jugadores...")
     if not modo_de_juego:
         print("Iniciando partida de un jugador contra la máquina...")
     time.sleep(3)
-    clear()
+    clear() # La partida empieza tras una pausa de 3 segundos.
 
     while not salir:
         if seguir_j1 or n_ronda == 1:
@@ -187,13 +189,14 @@ def blackjack():
                 if seguir_j2:
                     seguir_j2 = pedir_seguir("Jugador 2")
             else:
-                seguir_j2 = (21 - puntuacion_j2) >= bot_se_planta
+                seguir_j2 = (21 - puntuacion_j2) >= riesgo_bot
             n_ronda += 1
         clear()
     
     print(ronda(n_ronda, cartas_j1, cartas_j2, puntuacion_j1, puntuacion_j2, ronda_final))
 
 def evaluar_resultado(puntuacion_j1, puntuacion_j2):
+    # Posibles resultados de la partida.
     if puntuacion_j1 > 21 and puntuacion_j2 > 21:
         return "Game over ¡Los dos os habéis pasado!"
     elif puntuacion_j1 == puntuacion_j2:
@@ -216,7 +219,7 @@ def barajar_cartas(baraja_ordenada: str):
     baraja_barajada = ""
    
     while len(baraja_ordenada) > 0:
-        # Elegir una posición aleatoria en la cadena de cartas
+        # Crea 
         indice_aleatorio = random.randint(0, (len(baraja_ordenada) // 2) - 1) * 2
         carta_aleatoria = baraja_ordenada[indice_aleatorio:indice_aleatorio + 2]
         baraja_barajada += carta_aleatoria
