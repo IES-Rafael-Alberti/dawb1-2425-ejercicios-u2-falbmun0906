@@ -20,5 +20,5 @@ def test_comprobar_contrasenia_todas_incorrectas(monkeypatch):
     inputs = iter(["mal_contraseña", "otra_contraseña"])
     monkeypatch.setattr('builtins.input', lambda _: next(inputs))
 
-    with pytest.raises(SystemExit):
+    with pytest.raises(StopIteration):
         comprobar_contrasenia()
