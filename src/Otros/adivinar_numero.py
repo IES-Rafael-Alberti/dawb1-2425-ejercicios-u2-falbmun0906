@@ -77,7 +77,7 @@ def mostrar_titulo(seccion: int, intentos: int = 0):
                 print(TITULOS[seccion].format(intentos = intentos) + "\n\n")
             else:
                 print(f"{TITULOS[seccion]}\n\n")
-    except:
+    except Exception:
         print(f"{TITULOS[0]}\n\n")
 
 def mostrar_error(msjError: str, lavar = True):
@@ -117,13 +117,15 @@ def evaluar_diferencia(numero: int, numero_oculto: int, frio: int, caliente: int
         2  # Te Quemas
     """
 	# Realizar la función según la documentación que observáis
+    resultado = 2
 
-    if abs(numero_oculto - numero) > frio:
-        return 0
-    elif caliente < abs(numero_oculto - numero) < frio:
-        return 1
-    elif abs(numero_oculto - numero) < caliente:
-        return 2
+    diferencia = abs(numero - numero_oculto)
+    if diferencia > frio:
+        resultado = 0
+    elif caliente < diferencia < frio:
+        resultado = 1
+
+    return resultado
 
 def obtener_pista(numero: int, numero_oculto: int, intentos: int, frio: int, caliente: int) -> str:
     """
@@ -155,24 +157,21 @@ def obtener_pista(numero: int, numero_oculto: int, intentos: int, frio: int, cal
 	# Realizar la función según la documentación que observáis
 	# Daros cuenta que debéis hacer una llamada a la función evaluar_diferencia()
 
-    if evaluar_diferencia(numero, numero_oculto, frio, caliente) == 0:
+    numero_diferencia = evaluar_diferencia(numero, numero_oculto, frio, caliente)
+
+    if numero_diferencia == 0:
         if numero_oculto < numero:
             return f"\nFRÍO, FRÍO, el numero oculto es MENOR... ¡te quedan {intentos} intentos!\n"
-  
         else:
             return f"\nFRÍO, FRÍO, el numero oculto es MAYOR... ¡te quedan {intentos} intentos!\n"
-
-    elif evaluar_diferencia(numero, numero_oculto, frio, caliente) == 1:
+    elif numero_diferencia == 1:
         if numero_oculto < numero:
             return f"\nCALIENTE, CALIENTE, el numero oculto es MENOR... ¡te quedan {intentos} intentos!\n"
-
         else:
             return f"\nCALIENTE, CALIENTE, el numero oculto es MAYOR... ¡te quedan {intentos} intentos!\n"
-
-    elif evaluar_diferencia(numero, numero_oculto, frio, caliente) == 2:
+    elif numero_diferencia == 2:
         if numero_oculto < numero:
             return f"\n¡TE QUEMAS!, el numero oculto es MENOR... ¡te quedan {intentos} intentos!\n"
-
         else:
             return f"\n¡TE QUEMAS! el numero oculto es MAYOR... ¡te quedan {intentos} intentos!\n"
 
@@ -227,19 +226,19 @@ def adivina_el_numero(numero_oculto: int, total_intentos: int, minimo: int, maxi
     numero_valido = False
     intentos_realizados = 0
     while not numero_adivinado and intentos_realizados != total_intentos:
-        while not numero_valido:
-            try:
-                numero_usuario = pedir_numero_usuario("¿Qué número es? ", minimo, maximo)
-                numero_valido = True
-            except ValueError as e:
-                mostrar_error(e, lavar = False) # La funcion mostrar_error() siempre limpia la pantalla, pero en este caso en concreto no quiero que lo haga, por lo que le mando un valor False que a su vez se lo manda a la función pausa().
-        intentos_realizados += 1
-        if numero_usuario == numero_oculto:
-            numero_adivinado = True
-        else:
-            if total_intentos > intentos_realizados:
-                print(obtener_pista(numero_usuario, numero_oculto, total_intentos - intentos_realizados, frio, caliente))
-        numero_valido = False
+        numero_usuario = None
+        try:
+            numero_usuario = pedir_numero_usuario("¿Qué número es? ", minimo, maximo)
+        except ValueError as e:
+            mostrar_error(e, lavar = False) # La funcion mostrar_error() siempre limpia la pantalla, pero en este caso en concreto no quiero que lo haga, por lo que le mando un valor False que a su vez se lo manda a la función pausa().
+        if numero_usuario != None:
+            intentos_realizados += 1
+            if numero_usuario == numero_oculto:
+                numero_adivinado = True
+            else:
+                if total_intentos > intentos_realizados:
+                    print(obtener_pista(numero_usuario, numero_oculto, total_intentos - intentos_realizados, frio, caliente))
+
 
     return numero_adivinado, intentos_realizados
 
@@ -364,6 +363,25 @@ def configurar_pistas(minimo: int, maximo: int) -> tuple:
     limpiar_pantalla()
     return frio, caliente
 
+    # VERSION DE DIEGO
+    # # while not numeros_validos:
+    #     try:
+    #         minimo == pedir_numero_usuario
+    #         maximo = pedir_numero_usuario
+
+    #         if minimo >= maximo
+    #             raise ValueError(
+            
+    #         if abs(maximoo - minimo) <100
+    #             raise ValueError()
+            
+    #         numeros_validos = True
+        
+    #     except ValueError as e:
+    #         mostrar_error(e)
+
+    # return minimo, maximo
+
 def configurar_intentos(rango_numero_oculto) -> int:
     """
     Configura el número de intentos para adivinar el número oculto, asegurando que el valor es positivo 
@@ -418,7 +436,7 @@ def configurar_juego() -> tuple:
     
     minimo, maximo = configurar_rangos_numeros()
     frio, caliente = configurar_pistas(minimo, maximo)
-    intentos = configurar_intentos(maximo - minimo)
+    intentos = configurar_intentos(abs(maximo - minimo))
 
     return minimo, maximo, intentos, frio, caliente
 
@@ -457,6 +475,15 @@ def mostrar_menu():
     print("4. Salir.\n")
 
 def comprobar_opcion(opcion):
+    """
+    Comprueba la opción del menú
+
+    Args:
+        opcion (int): número entero con la opción seleccionada.
+
+    Returns:
+        (bool): Si la opción está entre 1 y 4 (inclusive), devuelve True.
+    """
 	# Crear la documentación recomendada para esta función
     return 1 <= opcion <= 4
 
@@ -566,7 +593,7 @@ def main():
     salir = False
     limpiar_pantalla()
     mostrar_titulo(1)
-    pausa(3, limpiar = False)
+    pausa(2, limpiar = False)
     mostrar_configuracion(minimo, maximo, intentos, frio, caliente, pantalla_inicial = True)
 
     while not salir:
