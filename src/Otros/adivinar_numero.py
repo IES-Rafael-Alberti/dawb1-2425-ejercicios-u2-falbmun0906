@@ -414,7 +414,7 @@ def configurar_intentos(rango_numero_oculto) -> int:
                 raise ValueError("*ERROR* El número de intentos debe ser un número entero positivo!")
         except ValueError as e:
             if intentos == None:
-                print("**ERROR** Entrada inválida.")
+                mostrar_error("Entrada inválida.")
             else:
                 print(e)
             intentos = None
